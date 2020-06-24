@@ -22,7 +22,6 @@ class PageController extends Controller
 
         if ($page->isEmpty()) {
             header("Location: " . BASE_URL . "default/404.php");
-            throw new \InvalidArgumentException("Page not found here");
         }
 
         $this->render($slug, ['info' => $page]);
