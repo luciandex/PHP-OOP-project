@@ -7,8 +7,6 @@ use App\objects\Message;
 
 class MessageModel extends Model
 {
-    public $messageStatus;
-
     public function saveMessage(Message $message)
     {
         $stmt = $this->conn
@@ -29,21 +27,17 @@ class MessageModel extends Model
 
         } catch (\PDOException $e) {
             error_log($e->getMessage());
-            $this->messageStatus = <<<_MSG
+            $messageStatus = <<<_MSG
                             <h3>Your message could not be sent. We are sorry for the inconvenience!<h3> <br><br><br>
                             <h4>Possible reasons for this are:</h4> <br>
                             <ul> Database is not ready. <br>
                             Trying to send same informations two times (duplicate occured) <br>
                             The server is busy </ul>
                             _MSG;
-
-//            echo '<div class="badge center-block" style="background-color: mediumvioletred">';
-//            echo $this->messageStatus;
-//            echo "</div><br/>";
-
-
         }
-        $messageStatus = $this->messageStatus;
-//        echo $messageStatus;
+
+        if(isset($messageStatus)) {
+            return $messageStatus;
+        }
     }
 }
