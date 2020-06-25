@@ -1,9 +1,5 @@
 <?php declare(strict_types=1);
 
-//$contactForm = new \App\controllers\ContactController();
-//$contactForm->contact();
-var_dump($_POST);
-//var_dump($message);
 
 ?>
 
@@ -54,25 +50,30 @@ var_dump($_POST);
             <div class="col-md-8">
 
                 <?php
-//                var_dump($messageStatus);
 
-                if (isset($_POST['submit']) && !isset($_POST['errors']) /*&& !isset($e)*/) {
+                if (isset($_POST['submit']) && !isset($_POST['errors']) && !isset($messageStatus)) {
                     echo '<div class="badge" style="background-color: greenyellow">';
                     echo "Message was sent succesfully. <br> Thank you for contacting us!";
                     echo "</div>";
+                } elseif (isset($messageStatus)) {
+                    echo '<div class="badge center-block" style="background-color: lightcoral">' . $messageStatus . '</div><br/>';
                 }
 
                 if (isset($_POST['errors'])) {
                     foreach ($_POST['errors'] as $error) {
-                        echo '<div class="badge" style="background-color: red">';
-                        echo $error . "<br/>";
-                        echo "</div><br/>";
+                        echo '<div class="badge" style="background-color: red">' . $error . '<br/></div><br/>';
                     }
 
-                    for ($i = 0; $i <= count($_POST['errors'])-1; $i++) {
-                        if (strpos($_POST['errors'][$i], "Name") === 0) {$nm = 1;}
-                        if (strpos($_POST['errors'][$i], "Subject") === 0) {$sbj = 1;}
-                        if (strpos($_POST['errors'][$i], "Message") === 0) {$msg = 1;}
+                    for ($i = 0; $i <= count($_POST['errors']) - 1; $i++) {
+                        if (strpos($_POST['errors'][$i], "Name") === 0) {
+                            $nm = 1;
+                        }
+                        if (strpos($_POST['errors'][$i], "Subject") === 0) {
+                            $sbj = 1;
+                        }
+                        if (strpos($_POST['errors'][$i], "Message") === 0) {
+                            $msg = 1;
+                        }
                     }
                 }
 
