@@ -4,12 +4,9 @@
 // get page title section only if page slug exist
 // (for home page "page slug" does not exist; it will be shown slider by default)
 
-if (!isset($_GET['slug'])) {
+if (!isset($_GET['controller'])) {
     echo '';
-} else {
-    $slug = $_GET['slug'];
-
-$page = (new \App\models\PageModel())->getPage($slug);
+} elseif($_GET['controller'] != 'default') {
 
 ?>
 
@@ -22,7 +19,7 @@ $page = (new \App\models\PageModel())->getPage($slug);
             </h1>
             <ul class="title-menu clearfix">
                 <li>
-                    <a href="<?php echo BASE_URL; ?>"><?php echo 'home'; ?> &nbsp;/</a>
+                    <a href="<?php echo BASE_URL; ?>">Home &nbsp;/</a>
                 </li>
                 <li><?php echo $page->getTitle(); ?></li>
             </ul>
@@ -31,4 +28,4 @@ $page = (new \App\models\PageModel())->getPage($slug);
 </section>
 <!--End Page Title-->
 
-<?php  }; // end brace for ELSE statement
+<?php  }; // end brace for ELSEIF statement
