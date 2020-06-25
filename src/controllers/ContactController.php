@@ -4,28 +4,19 @@ namespace App\controllers;
 
 use App\core\Controller;
 use App\Models\MessageModel;
-use App\models\PageModel;
 use App\objects\Message;
 
 class ContactController extends Controller
 {
-    protected $model;
     protected $messageModel;
 
     public function __construct()
     {
-        $this->model = new PageModel();
         $this->messageModel = new MessageModel();
     }
 
     public function index()
     {
-        $page = $this->model->getPage('contact');
-
-        if ($page->isEmpty()) {
-            (new DefaultController())->errorPage404();
-        }
-
         try {
             if ($_POST != [] && isset($_POST['submit'])) {
                 $message = $this->processForm($_POST);
@@ -78,21 +69,21 @@ class ContactController extends Controller
     private function validateName(array $input)
     {
         if (isset($input['name']) && (strlen(trim("{$input['name']}")) < 3)) {
-            throw new \LengthException('Name too short (under 3 chars) or empty.');
+            throw new \LengthException('Name too short (under 3 chars).');
         }
     }
 
     private function validateSubject(array $input)
     {
         if (isset($input['subject']) && (strlen(trim("{$input['subject']}")) < 5)) {
-            throw new \LengthException("Subject too short (under 5 chars) or empty.");
+            throw new \LengthException("Subject too short (under 5 chars).");
         }
     }
 
     private function validateMessage(array $input)
     {
         if (isset($input['message']) && (strlen(trim("{$input['message']}")) < 20)) {
-            throw new \LengthException("Message too short (under 20 chars) or empty.");
+            throw new \LengthException("Message too short (under 20 chars).");
         }
 
     }
