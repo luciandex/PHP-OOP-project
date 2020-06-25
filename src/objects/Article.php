@@ -217,10 +217,10 @@ class Article {
         $this->updatedAt = $updatedAt;
         return $this;
     }
-
-    public function isEmpty(): bool
-    {
-        return (empty($this->id)) && (empty($this->title)) && (empty($this->short));
-    }
+//
+//    public function isEmpty(): bool
+//    {
+//        return (empty($this->id)) && (empty($this->title)) && (empty($this->short));
+//    }
 
 }

@@ -5,11 +5,10 @@ namespace App\objects;
 class Message
 {
     protected int $id;
-    protected string $name;
-    protected string $email;
-    protected string $subject;
-    protected string $message;
-    protected int $sentDate;
+    protected ?string $name;
+    protected ?string $email;
+    protected ?string $subject;
+    protected ?string $message;
 
     /**
      * @return int
@@ -30,92 +29,75 @@ class Message
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
-     * @param string $name
-     * @return Message
+     * @param string|null $name
+     * @return null|Message
      */
-    public function setName(string $name): Message
+    public function setName(?string $name): ?Message
     {
         $this->name = $name;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
     /**
-     * @param string $email
-     * @return Message
+     * @param string|null $email
+     * @return null|Message
      */
-    public function setEmail(string $email): Message
+    public function setEmail(?string $email): ?Message
     {
         $this->email = $email;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSubject(): string
+    public function getSubject(): ?string
     {
         return $this->subject;
     }
 
     /**
-     * @param string $subject
-     * @return Message
+     * @param string|null $subject
+     * @return null|Message
      */
-    public function setSubject(string $subject): Message
+    public function setSubject(?string $subject): ?Message
     {
         $this->subject = $subject;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         return $this->message;
     }
 
     /**
-     * @param string $message
-     * @return Message
+     * @param string|null $message
+     * @return null|Message
      */
-    public function setMessage(string $message): Message
+    public function setMessage(?string $message): ?Message
     {
         $this->message = $message;
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getSentDate(): int
-    {
-        return $this->sentDate;
-    }
-
-    /**
-     * @param int $sentDate
-     * @return Message
-     */
-    public function setSentDate(int $sentDate): Message
-    {
-        $this->sentDate = $sentDate;
-        return $this;
-    }
 }
