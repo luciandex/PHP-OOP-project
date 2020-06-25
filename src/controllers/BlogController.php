@@ -54,7 +54,7 @@ class BlogController extends Controller
             (new DefaultController())->errorPage404();
         }
 
-        $article = (new \App\models\ArticleModel())->getArticle($id);
+        $article = (new ArticleModel())->getArticle($id);
 
         for ($i = 1; $i < 10; $i++) {                              // correct form will be $i < count($articles) or something similar
             $categories[] = $this->articleModel->getCatAndTags($i);
