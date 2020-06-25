@@ -40,8 +40,6 @@ class ContactController extends Controller
         }
 
         $this->render('contact', [
-            /*'_POST' => $_POST ?? null,*/
-            'errors' => ($_POST['errors'] ?? ''),
             'messageStatus' => $messageStatus ?? null
         ]);
     }
@@ -49,8 +47,6 @@ class ContactController extends Controller
 
     private function processForm(array $input): Message
     {
-
-//        if ($input['submit']) {
         try {
             $this->validateName($input);
         } catch (\LengthException $lengthException) {
@@ -70,10 +66,6 @@ class ContactController extends Controller
         } catch (\LengthException $lengthException) {
             $_POST['errors'][] = $lengthException->getMessage();
         }
-//        }
-//        if (isset($_POST['errors'])) {
-//            $_POST['errors'];
-//        }
 
         return (new Message())
             ->setName(htmlentities(trim("{$input['name']}")))
@@ -82,9 +74,9 @@ class ContactController extends Controller
             ->setMessage(htmlentities(trim("{$input['message']}")));
     }
 
+
     private function validateName(array $input)
     {
-
         if (isset($input['name']) && (strlen(trim("{$input['name']}")) < 3)) {
             throw new \LengthException('Name too short (under 3 chars) or empty.');
         }
