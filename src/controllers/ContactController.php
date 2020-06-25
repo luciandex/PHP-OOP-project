@@ -31,7 +31,7 @@ class ContactController extends Controller
                 $message = $this->processForm($_POST);
 
                 if (!isset($_POST['errors'])) {
-                    $this->messageModel->saveMessage($message);
+                    $messageStatus = $this->messageModel->saveMessage($message);
                 }
             }
         } catch (\InvalidArgumentException $invalidArgumentException) {
@@ -39,44 +39,47 @@ class ContactController extends Controller
             echo 'Something went wrong. Please try again.';
         }
 
-        $this->render('contact', ['errors' => ($_POST['errors'] ?? '')]);
+        $this->render('contact', [
+            /*'_POST' => $_POST ?? null,*/
+            'errors' => ($_POST['errors'] ?? ''),
+            'messageStatus' => $messageStatus ?? null
+        ]);
     }
 
 
     private function processForm(array $input): Message
     {
 
-        if ($input['submit']) {
-            try {
-                $this->validateName($input);
-            } catch (\LengthException $lengthException) {
-                $_POST['errors'][] = $lengthException->getMessage();
-            }
-
-
-            try {
-                $this->validateSubject($input);
-            } catch (\LengthException $lengthException) {
-                $_POST['errors'][] = $lengthException->getMessage();
-            }
-
-
-            try {
-                $this->validateMessage($input);
-            } catch (\LengthException $lengthException) {
-                $_POST['errors'][] = $lengthException->getMessage();
-            }
-        }
-        if (!isset($_POST['errors'])) {
-
-            $contactForm = (new Message())
-                ->setName(htmlentities(trim("{$input['name']}")))
-                ->setEmail(htmlentities(trim("{$input['email']}")))
-                ->setSubject(htmlentities(trim("{$input['subject']}")))
-                ->setMessage(htmlentities(trim("{$input['message']}")));
+//        if ($input['submit']) {
+        try {
+            $this->validateName($input);
+        } catch (\LengthException $lengthException) {
+            $_POST['errors'][] = $lengthException->getMessage();
         }
 
-        return $contactForm;
+
+        try {
+            $this->validateSubject($input);
+        } catch (\LengthException $lengthException) {
+            $_POST['errors'][] = $lengthException->getMessage();
+        }
+
+
+        try {
+            $this->validateMessage($input);
+        } catch (\LengthException $lengthException) {
+            $_POST['errors'][] = $lengthException->getMessage();
+        }
+//        }
+//        if (isset($_POST['errors'])) {
+//            $_POST['errors'];
+//        }
+
+        return (new Message())
+            ->setName(htmlentities(trim("{$input['name']}")))
+            ->setEmail(htmlentities(trim("{$input['email']}")))
+            ->setSubject(htmlentities(trim("{$input['subject']}")))
+            ->setMessage(htmlentities(trim("{$input['message']}")));
     }
 
     private function validateName(array $input)
