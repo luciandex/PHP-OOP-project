@@ -24,6 +24,6 @@ class PageController extends Controller
             header("Location: " . BASE_URL . "default/404.php");
         }
 
-        $this->render($slug, ['info' => $page]);
+        $this->render($slug, ['page' => $page]);
     }
 }

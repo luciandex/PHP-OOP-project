@@ -5,21 +5,29 @@ namespace App\controllers;
 
 use App\core\Controller;
 use App\models\ArticleModel;
+use App\models\PageModel;
 
 
 class BlogController extends Controller
-
 {
+    protected $model;
     protected $articleModel;
 
     public function __construct()
     {
+        $this->model = new PageModel();
         $this->articleModel = new ArticleModel();
     }
 
     public function index()
     {
-        for ($i = 1; $i < 28; $i++) {
+        $page = $this->model->getPage('blog');
+
+        if($page->isEmpty()){
+            (new DefaultController())->errorPage404();
+        }
+
+        for ($i = 1; $i < 10; $i++) {                              // correct form will be $i < count($articles) or something similar
             $articles[] = $this->articleModel->getArticle($i);
             $categories[] = $this->articleModel->getCatAndTags($i);
         }
@@ -34,14 +42,21 @@ class BlogController extends Controller
             throw new \InvalidArgumentException("At this moment the blog was not found on this site");
         }
 
-        $this->render('blog', ['articles' => $articles, 'getCategories' => $getCategories, 'getTags' => $getTags]);
+        $this->render('blog', ['articles' => $articles, 'getCategories' => $getCategories, 'getTags' => $getTags, 'page' => $page]);
     }
 
 
     public function article(string $id) {
+
+        $page = $this->model->getPage('blog');
+
+        if($page->isEmpty()){
+            (new DefaultController())->errorPage404();
+        }
+
         $article = (new \App\models\ArticleModel())->getArticle($id);
 
-        for ($i = 1; $i < 28; $i++) {
+        for ($i = 1; $i < 10; $i++) {                              // correct form will be $i < count($articles) or something similar
             $categories[] = $this->articleModel->getCatAndTags($i);
         }
 
@@ -50,7 +65,7 @@ class BlogController extends Controller
             $getTags[] = $category->getCategory();
         }
 
-        $this->render('template/article', ['article' => $article, 'getCategories' => $getCategories, 'getTags' => $getTags]);
+        $this->render('template/article', ['article' => $article, 'getCategories' => $getCategories, 'getTags' => $getTags, 'page' => $page]);
     }
 
 }

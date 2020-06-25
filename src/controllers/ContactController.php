@@ -4,19 +4,28 @@ namespace App\controllers;
 
 use App\core\Controller;
 use App\Models\MessageModel;
+use App\models\PageModel;
 use App\objects\Message;
 
 class ContactController extends Controller
 {
+    protected $model;
     protected $messageModel;
 
     public function __construct()
     {
+        $this->model = new PageModel();
         $this->messageModel = new MessageModel();
     }
 
     public function index()
     {
+        $page = $this->model->getPage('contact');
+
+        if ($page->isEmpty()) {
+            (new DefaultController())->errorPage404();
+        }
+
         try {
             if ($_POST != [] && isset($_POST['submit'])) {
                 $message = $this->processForm($_POST);
@@ -31,7 +40,8 @@ class ContactController extends Controller
         }
 
         $this->render('contact', [
-            'messageStatus' => $messageStatus ?? null
+            'messageStatus' => $messageStatus ?? null,
+            'page' => $page
         ]);
     }
 
