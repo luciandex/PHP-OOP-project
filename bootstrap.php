@@ -6,7 +6,6 @@ define('VIEWS_PATH', "src" . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR
 define('RESOURCES_PATH', BASE_URL . "resources" . DIRECTORY_SEPARATOR);
 
 
-
 spl_autoload_register(function (string $className) {
     $className = str_replace("App\\", "src\\", $className);
     $className = str_replace("\\", DIRECTORY_SEPARATOR, $className);

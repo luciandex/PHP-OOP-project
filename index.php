@@ -5,4 +5,3 @@ include "bootstrap.php";
 $config = [];
 $app = \App\Application::getInstance($config);
 $app->run();
-
