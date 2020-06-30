@@ -9,10 +9,7 @@
             <div class="col-md-9 col-sm-12 col-xs-12">
                 <div class="left-side">
 
-                    <?php $key = 0;
-                    foreach (array_reverse($articles) as $key => $article) {
-                        $key++;
-                        if ($key < 4) {
+                    <?php foreach ($articles as $article) {
                             ?>
 
                             <div class="item-holder">
@@ -35,8 +32,7 @@
                                 </div>
                             </div>
 
-                        <?php } else break;
-                    } ?>
+                        <?php } ?>
 
                 </div>
             </div>
