@@ -4,7 +4,6 @@
 namespace App;
 
 use App\controllers\DefaultController;
-use http\Exception\InvalidArgumentException;
 
 class Application
 {
@@ -82,7 +81,7 @@ class Application
 
         if (class_exists($fullControllerName) === false) {
             (new DefaultController())->errorPage404();
-            throw new InvalidArgumentException("Page $this->controller not found");
+            throw new \InvalidArgumentException("Page \"$this->controller\" not found.");
         }
 
         $this->controller = $fullControllerName;
@@ -100,12 +99,7 @@ class Application
             return $this;
         }
 
-        $checkAction = new \ReflectionClass($this->controller);
-
-        if ($checkAction->hasMethod($this->action)) {
             $this->action = strtolower($action);
-            throw new InvalidArgumentException("That move can not be processed");
-        }
 
         return $this;
     }
@@ -129,11 +123,15 @@ class Application
     public function run()
     {
         $this->parseUri();
+
+        if($this->controller === null){
+            (new DefaultController())->index();
+        }
+
         $result = call_user_func_array([new $this->controller, $this->action], $this->params);
 
-        if ($result === false || $this->controller === null) {
+        if ($result == false) {
             (new DefaultController())->errorPage404();
-            throw new \RuntimeException("$this->controller was not found or not possible to initiate");
         }
     }
 
