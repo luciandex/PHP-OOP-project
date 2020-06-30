@@ -1,5 +1,10 @@
 <?php declare(strict_types=1);
 
+//if (isset($_GET['controller']) && $_GET['controller'] == 'blog') {
+//    echo '';
+//} else {
+    $footerArticles = (new \App\controllers\BlogController())->getArticles();
+//}
 
 ?>
 
@@ -107,7 +112,7 @@
                     <a href="?controller=page&slug=about">About</a>
                 </li>
                 <li>
-                    <a href="?controller=page&slug=contact">Contact</a>
+                    <a href="?controller=contact">Contact</a>
                 </li>
             </ul>
         </div>

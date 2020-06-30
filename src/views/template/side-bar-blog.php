@@ -14,15 +14,16 @@
             </div>
             <ul class="categorise-list">
 
-                <?php foreach (array_unique($getCategories) as $category): ?>
+                <?php foreach (array_unique($categories) as $category): ?>
 
-                <li><a href="#"><?php echo $category; ?> <span>(
+                    <li><a href="#"><?php echo $category; ?> <span>(
+
                     <?php
-                                            foreach (array_count_values($getCategories) as $k => $getNumber) {
-                                                if ($k == $category) echo $getNumber;
-                                                else echo '';
-                                            }
-                                            ?>
+                    foreach (array_count_values($categories) as $k => $getNumber) {
+                        if ($k == $category) echo $getNumber;
+                        else echo '';
+                    }
+                    ?>
                                             )</span></a></li>
 
                 <?php endforeach; ?>
@@ -34,11 +35,16 @@
                 <h6>Tags</h6>
             </div>
 
-            <?php foreach (array_unique($getTags) as $tag) : ?>
-
-            <a href="#"><?php echo $tag; ?></a>
-
-            <?php endforeach; ?>
+            <?php $string = "";
+            foreach ($tags as $array) {
+                $string .= implode(',', $array) . ',';
+                $cleanString = trim(str_replace(', ', ',', $string), ',');
+                $uniqueTags = array_unique(explode(',', $cleanString));
+            }
+            foreach ($uniqueTags as $tag) {
+                echo '<a href="#">' . $tag . '</a>';
+            }
+            ?>
 
         </div>
     </div>

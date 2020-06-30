@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 ?>
 
 <!-- Article Section -->
@@ -20,7 +19,7 @@
                             <span>By <?php echo $article->getAuthor(); ?> / <?php echo $article->getCreatedAt(); ?></span>
                             <p><?php echo $article->getText(); ?></p>
                             <div class="text">
-<!--                                <p>--><?php //echo $article->getText(); ?><!--</p>-->
+                                <p><?php echo $article->getText(); ?></p>
                             </div>                            
                         </div>
                     </div>

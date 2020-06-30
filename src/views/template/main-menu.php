@@ -5,7 +5,6 @@ $requestUri = $_SERVER['REQUEST_URI'];
 $uri = preg_replace('((.*)=)', '', "$requestUri");
 
 ?>
-
 <!--Main Header-->
 <nav class="navbar navbar-default">
     <div class="container">
@@ -26,7 +25,7 @@ $uri = preg_replace('((.*)=)', '', "$requestUri");
 
                 <?php foreach ($menuItems as $menuItem) {
                     echo '<li ';
-                    if ($menuItem->getText() == $uri || ($menuItem->getText() == 'home' && $uri == 'default')) {
+                    if ($menuItem->getText() == $uri || ($menuItem->getText() == 'home' && $uri == 'index')) {
                         echo 'class="active"';
                     }
                     echo '><a href="' . $menuItem->getUrl() . '">' . $menuItem->getText() . '</a></li>';
