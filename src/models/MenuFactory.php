@@ -3,21 +3,12 @@
 
 namespace App\models;
 
-use App\objects\Menu;
-
 
 class MenuFactory
 {
-    public static function buildMenu(
-        int $parentId,
-        ?string $url,
-        ?string $text,
-        ?string $icon,
-        string $createdAt,
-        string $updatedAt
-    ): Menu
+    public static function buildMenu(int $parentId, ?string $url, ?string $text, ?string $icon, string $createdAt, string $updatedAt): MenuModel
     {
-        $menu = new Menu();
+        $menu = new MenuModel();
         $menu
             ->setParentId($parentId)
             ->setUrl($url)

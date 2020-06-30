@@ -1,71 +1,134 @@
 <?php
 
-
 namespace App\models;
 
-
-use App\core\Model;
-use App\objects\Menu;
-
-
-class MenuModel extends Model
+class MenuModel
 {
-    public const MAIN_MENU = '2';
-    public const SOCIAL_MEDIA = '1';
-    public const FOOTER_LINKS = '3';
+    protected ?string $parentId;
+    protected ?string $url;
+    protected ?string $text;
+    protected ?string $icon;
+    protected $createdAt;
+    protected $updatedAt;
+
+
+    /**
+     * @return string|null
+     */
+    public function getParentId(): ?string
+    {
+        return $this->parentId;
+    }
 
     /**
      * @param string|null $parentId
-     * @return Menu
+     * @return MenuModel
      */
-    public function getMenu(?string $parentId = null)
+    public function setParentId(?string $parentId): MenuModel
     {
-        $menu = new Menu($parentId);
-
-        if ($parentId == null) {
-            return $menu;
-        }
-
-        $stmt = $this->conn
-            ->getPDO()
-            ->prepare("SELECT * FROM `menu-items` WHERE `parent_id` = :parentId");
-        $stmt->execute(['parentId' => $parentId]);
-
-        $dbMenuItems = $stmt->fetchAll();
-
-        if ($stmt->rowCount() > 0) {
-            foreach ($dbMenuItems as $dbMenu) {
-                $menu
-                    ->setParentId($dbMenu['parent_id'])
-                    ->setUrl($dbMenu['url'])
-                    ->setText($dbMenu['text'])
-                    ->setIcon($dbMenu['icon'])
-                    ->setCreatedAt($dbMenu['created_at'])
-                    ->setUpdatedAt($dbMenu['updated_at']);
-            }
-        }
-
-        $menuItems = $this->mapArrayToMenuItems($dbMenuItems);
-
-        $menu->setMenuItems($menuItems);
-
-        return $menu;
+        $this->parentId = $parentId;
+        return $this;
     }
 
-    private function mapArrayToMenuItems(array $dbMenus): array
+    /**
+     * @return string|null
+     */
+    public function getUrl(): ?string
     {
-        $results = [];
-        foreach ($dbMenus as $dbMenu) {
-            $results[] = MenuFactory::buildMenu(
-                $dbMenu['parent_id'],
-                $dbMenu['url'],
-                $dbMenu['text'],
-                $dbMenu['icon'],
-                $dbMenu['created_at'],
-                $dbMenu['updated_at']
-            );
-        }
-        return $results;
+        return $this->url;
     }
+
+    /**
+     * @param string|null $url
+     * @return MenuModel
+     */
+    public function setUrl(?string $url): MenuModel
+    {
+        $this->url = $url;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    /**
+     * @param string|null $text
+     * @return MenuModel
+     */
+    public function setText(?string $text): MenuModel
+    {
+        $this->text = $text;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIcon(): ?string
+    {
+        return $this->icon;
+    }
+
+    /**
+     * @param string|null $icon
+     * @return MenuModel
+     */
+    public function setIcon(?string $icon): MenuModel
+    {
+        $this->icon = $icon;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     * @return MenuModel
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param mixed $updatedAt
+     * @return MenuModel
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    public function __construct(?string $parentId = null)
+    {
+        $this->setParentId($parentId);
+    }
+
+    public function isEmpty(): bool
+    {
+        return (empty($this->parentId)) && (empty($this->url)) && (empty($this->text));
+    }
+
 
 }

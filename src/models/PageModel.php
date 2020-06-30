@@ -2,40 +2,146 @@
 
 namespace App\models;
 
-use App\core\Model;
-use App\objects\Page;
 
-class PageModel extends Model
+class PageModel
 {
+    protected string $slug;
+    protected string $title;
+    protected string $description;
+    protected string $content;
+    protected string $author;
+    protected $createdAt;
+    protected $updatedAt;
+
     /**
-     * @param string|null $slug
-     * @return Page
+     * @return string
      */
-    public function getPage(?string $slug = null)
+    public function getSlug(): string
     {
-        $page = new Page();
+        return $this->slug;
+    }
 
-        if ($slug == null) {
-            return $page;
-        }
+    /**
+     * @param string $slug
+     * @return PageModel
+     */
+    public function setSlug(string $slug): PageModel
+    {
+        $this->slug = $slug;
+        return $this;
+    }
 
-        $stmt = $this->conn
-            ->getPDO()
-            ->prepare("SELECT * FROM `pages` WHERE `slug` = :slug");
-        $stmt->execute(['slug' => $slug]);
-        $dbPage = $stmt->fetch();
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
 
-        if ($stmt->rowCount() > 0) {
-            /*return */
-            $page
-                ->setSlug($dbPage['slug'])
-                ->setTitle($dbPage['title'])
-                ->setDescription($dbPage['description'])
-                ->setContent($dbPage['content'])
-                ->setAuthor($dbPage['author'])
-                ->setCreatedAt($dbPage['created_at'])
-                ->setUpdatedAt($dbPage['updated_at']);
-            return $page;
-        }
+    /**
+     * @param string $title
+     * @return PageModel
+     */
+    public function setTitle(string $title): PageModel
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     * @return PageModel
+     */
+    public function setDescription(string $description): PageModel
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent(): string
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param string $content
+     * @return PageModel
+     */
+    public function setContent(string $content): PageModel
+    {
+        $this->content = $content;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthor(): string
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param string $author
+     * @return PageModel
+     */
+    public function setAuthor(string $author): PageModel
+    {
+        $this->author = $author;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     * @return PageModel
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param mixed $updatedAt
+     * @return PageModel
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+
+    public function isEmpty(): bool
+    {
+        return (empty($this->title)) && (empty($this->description)) && (empty($this->content));
     }
 }
