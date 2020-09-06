@@ -1,4 +1,4 @@
-PROJECT PAGE: https://github.com/luciandex/PHP-OOP-project
+PROJECT PAGE: http://medipeople.c1.biz/
 
 Project theme: MedPeople - Medical Centre Website;
 
