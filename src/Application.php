@@ -99,7 +99,7 @@ class Application
             return $this;
         }
 
-            $this->action = strtolower($action);
+        $this->action = strtolower($action);
 
         return $this;
     }
@@ -108,23 +108,23 @@ class Application
     private function parseUri()
     {
         $path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY), "/");
+
         $data = [];
         parse_str($path, $data);
 
         $this->setController($data['controller'] ?? null);
         unset($data['controller']);
-
         $this->setAction($data['action'] ?? null);
         unset($data['action']);
-
         $this->setParams($data ?? []);
+
     }
 
     public function run()
     {
         $this->parseUri();
 
-        if($this->controller === null){
+        if ($this->controller === null) {
             (new DefaultController())->index();
         }
 
