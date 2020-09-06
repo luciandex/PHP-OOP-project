@@ -100,7 +100,6 @@ class BlogController extends Controller
     public function article($id)
     {
         $this->pageController = new PageController();
-        $this->pageController->index($this->getControllerName());
 
         $menuItems = $this->getMenuItems();
 
@@ -114,10 +113,10 @@ class BlogController extends Controller
         foreach ($this->articles as $article) {
             if ($article->getId() == $id) {
                 $this->render('template/article',
-                    ['article' => $article,
+                    ['page' => $this->pageController,
+                        'article' => $article,
                         'categories' => $this->catAndTags['categories'],
                         'tags' => $this->catAndTags['tags'],
-                        'page' => $this->pageController,
                         'socialMediaItems' => $menuItems['socialMedia'],
                         'menuItems' => $menuItems['mainMenu'],
                         'footerMenuItems' => $menuItems['footerLinks']
