@@ -1,4 +1,4 @@
-PROJECT PAGE: http://medipeople.c1.biz/
+PROJECT PAGE: http://medicalcenter.c1.biz/
 
 Project theme: MedPeople - Medical Centre Website;
 
