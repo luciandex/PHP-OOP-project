@@ -6,7 +6,6 @@ include_once VIEWS_PATH . 'template/page-title.php';
 
 
 try {
-
     if (file_exists($viewFile)) {
         include_once $viewFile;
     }
